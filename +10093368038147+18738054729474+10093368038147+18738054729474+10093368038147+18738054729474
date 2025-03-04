@@ -1,0 +1,131 @@
+local Players = game:GetService("Players")
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local replacementDictionary = {
+    [" "] = "",
+    ["fuck"] = "fนck",
+    ["Fuck"] = "Fนck",
+    ["shit"] = "รhit",
+    ["cum"] = "cนm",
+    ["nigga"] = "nigِgِa",
+    ["Nigga"] = "Nigِgِa",
+    ["Cum"] = "Cนm",
+    ["Shit"] = "Shِiِt",
+    ["sex"] = "รex",
+    ["Sex"] = "Sِeِxِ",
+    ["Dick"] = "Diِck",
+    ["dick"] = "diِck",
+    ["whore"] = "พhore",
+    ["clit"] = "cIit",
+    ["Clit"] = "Cِlِiِtِ",
+    ["Penis"] = "Peทis",
+    ["penis"] = "peทis",
+    ["vagina"] = "vagiทa",
+    ["Vagina"] = "Vagiทa",
+    ["discord"] = "diรcord",
+    ["Discord"] = "Diรcord",
+    ["youtube"] = "youtนbe",
+    ["Youtube"] = "Yِoutِนbe",
+    ["google"] = "googIe",
+    ["Google"] = "GoogIe",
+    ["gay"] = "gay",
+    ["ass"] = "aรร",
+    ["Ass"] = "Aรร",
+    ["Whore"] = "Wِhِore",
+    ["arse"] = "arรe",
+    ["Arse"] = "Arรe",
+    ["cock"] = "cِِoِcِkِ",
+    ["Cock"] = "Cِِoِcِkِ",
+    ["niggas"] = "nigِgِaร",
+    ["Niggas"] = "Nigِgِaร",
+    ["Bitch"] = "Filtered",
+    ["bitch"] = "bِِiِtِcِhِ",
+    ["butch"] = "bِِiِtِcِhِ",
+    ["Butch"] = "Bِِiِtِcِhِ",
+    ["let daddy fuck you up"] = "letdaddyfนckyouup",
+    ["wassup bitch"] = "wassupbِِiِtِcِhِ",
+    ["shut the fuck up"] = "shutthefนckup",
+    
+    ["a"] = "а", ["b"] = "Ь", ["c"] = "с", ["d"] = "ԁ", ["e"] = "е",
+    ["f"] = "ғ", ["g"] = "ɡ", ["h"] = "һ", ["i"] = "і", ["j"] = "ј",
+    ["k"] = "κ", ["l"] = "ӏ", ["m"] = "м", ["n"] = "п", ["o"] = "о",
+    ["p"] = "р", ["q"] = "գ", ["r"] = "г", ["s"] = "ѕ", ["t"] = "т",
+    ["u"] = "υ", ["v"] = "ν", ["w"] = "ѡ", ["x"] = "х", ["y"] = "у",
+    ["z"] = "ᴢ",
+    
+    
+    ["A"] = "А", ["B"] = "В", ["C"] = "С", ["D"] = "Ɗ", ["E"] = "Е",
+    ["F"] = "Ғ", ["G"] = "Ɠ", ["H"] = "Н", ["I"] = "І", ["J"] = "Ј",
+    ["K"] = "Κ", ["L"] = "Ꮮ", ["M"] = "М", ["N"] = "Ν", ["O"] = "О",
+    ["P"] = "Р", ["Q"] = "Ⴓ", ["R"] = "Я", ["S"] = "Ѕ", ["T"] = "Т",
+    ["U"] = "Ц", ["V"] = "Ѵ", ["W"] = "Ш", ["X"] = "Χ", ["Y"] = "Ү",
+    ["Z"] = "Ζ"
+}
+
+local function replaceWords(message)
+    for original, replacement in pairs(replacementDictionary) do
+        message = message:gsub("%f[%a]" .. original .. "%f[%A]", replacement)
+    end
+    return message
+end
+
+local function sendMessageToChat(message)
+    if TextChatService.TextChannels.RBXGeneral then
+        TextChatService.TextChannels.RBXGeneral:SendAsync(message)
+    else
+        ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "All")
+    end
+end
+
+sendMessageToChat("AEYA Bypasser Loaded By prorivals_Player0 and Reaper/boxy_500 V1")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = playerGui
+
+local background = Instance.new("Frame")
+background.Size = UDim2.new(0, 400, 0, 150) -- Medium size
+background.Position = UDim2.new(0.5, -200, 0.5, -75)
+background.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+background.BorderSizePixel = 0
+background.Active = true
+background.Draggable = true
+background.Parent = screenGui
+
+local textBox = Instance.new("TextBox")
+textBox.Size = UDim2.new(0, 360, 0, 40) -- Medium size
+textBox.Position = UDim2.new(0.5, 0, 0.3, 0)
+textBox.AnchorPoint = Vector2.new(0.5, 0.5)
+textBox.PlaceholderText = "Bypass Text"
+textBox.Text = ""
+textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+textBox.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+textBox.BorderColor3 = Color3.fromRGB(128, 0, 128)
+textBox.BorderSizePixel = 2
+textBox.ClearTextOnFocus = false
+textBox.Parent = background
+
+local sendButton = Instance.new("TextButton")
+sendButton.Size = UDim2.new(0, 100, 0, 30)
+sendButton.Position = UDim2.new(0.5, 0, 0.8, 0)
+sendButton.AnchorPoint = Vector2.new(0.5, 0.5)
+sendButton.Text = "Chat"
+sendButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+sendButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+sendButton.BorderColor3 = Color3.fromRGB(128, 0, 128)
+sendButton.BorderSizePixel = 2 -- Outline thickness
+sendButton.Parent = background
+
+local function sendChatMessage()
+    local message = textBox.Text
+    if message ~= "" then
+        local modifiedMessage = replaceWords(message)
+        sendMessageToChat(modifiedMessage)
+        textBox.Text = ""
+    end
+end
+
+sendButton.MouseButton1Click:Connect(sendChatMessage)
