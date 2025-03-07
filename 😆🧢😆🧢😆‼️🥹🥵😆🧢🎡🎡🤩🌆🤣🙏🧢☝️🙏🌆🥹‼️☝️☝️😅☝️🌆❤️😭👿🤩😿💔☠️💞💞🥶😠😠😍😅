@@ -1,0 +1,208 @@
+local yapping = true
+
+local Gaze = [[
+]]
+
+local everyClipboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set) or function() 
+    warn("Clipboard functionality is not supported on this platform.") 
+end
+
+local GazerHa_Cooldown = 0.8
+
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+local guiName = "GazeUI"
+local coreGui = game:GetService("CoreGui")
+
+local screenGui = coreGui:FindFirstChild(guiName)
+if not screenGui then
+    screenGui = Instance.new("ScreenGui")
+    screenGui.Name = guiName  
+    screenGui.Parent = coreGui
+end
+
+local function fadeText(labelText)
+    local label = Instance.new("TextLabel")
+    label.Parent = screenGui
+    label.Size = UDim2.new(0.5, 0, 0.2, 0)  
+    label.Position = UDim2.new(0.25, 0, 0.4, 0)  
+    label.BackgroundTransparency = 1
+    label.TextTransparency = 1
+    label.Text = labelText
+    label.TextColor3 = Color3.fromRGB(0, 0, 0)
+    label.TextStrokeTransparency = 0
+    label.TextStrokeColor3 = Color3.fromRGB(255, 0, 0)
+    label.TextScaled = true
+    label.Font = Enum.Font.GothamBlack 
+
+    local tweenService = game:GetService("TweenService")
+
+    local fadeIn = tweenService:Create(label, TweenInfo.new(GazerHa_Cooldown), {TextTransparency = 0})
+    fadeIn:Play()
+    fadeIn.Completed:Wait()
+
+    task.wait(GazerHa_Cooldown)
+
+    local fadeOut = tweenService:Create(label, TweenInfo.new(GazerHa_Cooldown), {TextTransparency = 1})
+    fadeOut:Play()
+    fadeOut.Completed:Wait()
+
+    label:Destroy()
+end
+
+if yapping then
+    fadeText("Void Bypasser Loading...")
+    fadeText("Created by: Prorivals_Player0 and Boxy_500")
+    fadeText("Channel: Unknown...")
+    fadeText("executing....")
+end
+
+local function chatMessage(message)
+    local textChatService = game:GetService("TextChatService")
+    local generalChannel = textChatService:FindFirstChild("TextChannels") and textChatService.TextChannels:FindFirstChild("RBXGeneral")
+
+    if generalChannel then
+        generalChannel:SendAsync(message)
+    else
+        local chatService = game:GetService("ReplicatedStorage"):FindFirstChild("DefaultChatSystemChatEvents")
+        if chatService and chatService:FindFirstChild("SayMessageRequest") then
+            chatService.SayMessageRequest:FireServer(message, "All")
+        else
+            warn("Chat system not found!")
+        end
+    end
+end
+
+if yapping then
+    chatMessage("AEYAbypasserhasbeenexecuted 1.0 - by ProRival_Player0 and Boxy_500")
+    everyClipboard(tostring(Gaze))
+end
+
+local function isTagged(message)
+    return string.find(message, "tagged") ~= nil
+end
+
+local function Bypass(input)
+    if isTagged(input) then
+        chatMessage("Message Detected Tagged")
+        return
+    end
+
+    local replacements = {
+        ["sex"] = "รex",
+        ["i"] = "iِ",
+        ["j"] = "j",
+        [" "] = "",
+        ["kike"] = "kiِke",
+        ["shite"] = "รhite",
+        ["arse"] = "arรe",
+        ["ass"] = "asร",
+        ["bastard"] = "baรtard",
+        ["bitch"] = "bِِiِtِcِhِ",
+        ["cock"] = "cِِoِcِkِ",
+        ["crap"] = "с͎rap",
+        ["cunt"] = "cuทt",
+        ["dick"] = "dِِiِcِkِ",
+        ["dumb"] = "dumb",
+        ["faggot"] = "fِaِgِgِoِtِ",
+        ["fuck"] = "fนck",
+        ["fucking"] = "fนcking",
+        ["fucker"] = "fนcker",
+        ["shit"] = "รhit",
+        ["nigga"] = "nigِgِa",
+        ["nigra"] = "Nigِgِra",
+        ["nigger"] = "Nigِgِer",
+        ["pussy"] = "pนssy",
+        ["slut"] = "slนt",
+        ["clit"] = "cIit",
+        ["boobs"] = "bِoِoِbِsِ",
+        ["breast"] = "breaรt",
+        ["sucker"] = "รucker",
+        ["boob"] = "bِoِoِbِ",
+        ["youtube"] = "youtนbe",
+        ["fucked"] = "fนcked",
+        ["discord"] = "diรcord",
+        ["pornhub"] = "porทhub",
+        ["cum"] = "cนm",
+    }
+
+    for word, replacement in pairs(replacements) do
+        input = input:gsub(word, replacement)
+    end
+
+    local A_1 = input
+    local A_2 = "All"
+
+    local textChatService = game:GetService("TextChatService")
+    if textChatService:FindFirstChild("TextChannels") then
+        textChatService.TextChannels.RBXGeneral:SendAsync(A_1)
+    else
+        local chatEvent = game:GetService("ReplicatedStorage"):FindFirstChild("DefaultChatSystemChatEvents")
+        if chatEvent and chatEvent:FindFirstChild("SayMessageRequest") then
+            chatEvent.SayMessageRequest:FireServer(A_1, A_2)
+        else
+            warn("Chat system not found!")
+        end
+    end
+end
+
+local gui = Instance.new("ScreenGui")
+local GazerMain = Instance.new("Frame")
+local GazerTitle = Instance.new("TextLabel")
+local TextBax = Instance.new("TextBox")
+local autoResetButton = Instance.new("TextButton")
+local chatButton = Instance.new("TextButton")
+
+gui.Name = "GazerGui"
+gui.Parent = coreGui
+
+GazerMain.Size = UDim2.new(0.5, 0, 0.5, 0)
+GazerMain.Position = UDim2.new(0.25, 0, 0.25, 0)
+GazerMain.BackgroundColor3 = Color3.new(0, 0, 0)
+GazerMain.Active = true
+GazerMain.Draggable = true
+GazerMain.Parent = gui
+
+local outline = Instance.new("UIStroke")
+outline.Parent = GazerMain
+outline.Thickness = 2
+outline.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+outline.Color = Color3.fromRGB(255, 0, 0)
+
+GazerTitle.Size = UDim2.new(1, 0, 0.2, 0)
+GazerTitle.Text = "AEYA Bypasser 1.0"
+GazerTitle.TextColor3 = Color3.fromRGB(255, 0, 0)
+GazerTitle.Font = Enum.Font.Bodoni
+GazerTitle.Parent = GazerMain
+
+TextBax.Size = UDim2.new(0.7, 0, 0.2, 0)
+TextBax.PlaceholderText = "(Chat)"
+TextBax.TextColor3 = Color3.fromRGB(255, 0, 0)
+TextBax.Font = Enum.Font.Code
+TextBax.BackgroundColor3 = Color3.new(0, 0, 0)
+TextBax.Parent = GazerMain
+
+chatButton.Size = UDim2.new(0.2, 0, 0.2, 0)
+chatButton.Position = UDim2.new(0.75, 0, 0.4, 0)
+chatButton.Text = "Chat"
+chatButton.Font = Enum.Font.Code
+chatButton.BackgroundColor3 = Color3.new(0, 0, 0)
+chatButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+chatButton.Parent = GazerMain
+
+chatButton.MouseButton1Click:Connect(function()
+    local inputString = TextBax.Text
+    Bypass(inputString)
+end)
+
+local function toLowercase()
+    TextBax.Text = TextBax.Text:lower()
+end
+
+TextBax.Changed:Connect(function(property)
+    if property == "Text" then
+        toLowercase()
+    end
+end)
